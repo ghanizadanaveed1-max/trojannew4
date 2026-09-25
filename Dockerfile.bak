@@ -1,0 +1,16 @@
+FROM alpine:3.20
+RUN apk add --no-cache ca-certificates curl unzip python3 sqlite-libs libqrencode-tools qrencode qrencode
+RUN mkdir -p /tmp/xray /etc/xray /etc/caddy /app \
+ && curl -fsSL https://github.com/XTLS/Xray-core/releases/latest/download/Xray-linux-64.zip -o /tmp/xray/xray.zip \
+ && unzip -q /tmp/xray/xray.zip xray -d /usr/bin \
+ && chmod +x /usr/bin/xray \
+ && rm -rf /tmp/xray \
+ && curl -fsSL 'https://caddyserver.com/api/download?os=linux&arch=amd64' -o /usr/bin/caddy \
+ && chmod +x /usr/bin/caddy
+COPY config.json /etc/xray/config.json
+COPY Caddyfile /etc/caddy/Caddyfile
+COPY server.py /app/server.py
+COPY entrypoint.sh /entrypoint.sh
+RUN chmod +x /entrypoint.sh
+ENV TROJAN_PASSWORD=Ghanizada WS_PATH=/ws/Ghanizada VLESS_WS_PATH=/ws/VLESS-Ghanizada VMESS_WS_PATH=/ws/VMess-Ghanizada SNI=firebase-settings.crashlytics.com OWNER_KEY=Ghanizada
+CMD ["/entrypoint.sh"]

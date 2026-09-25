@@ -1,0 +1,6 @@
+GHANIZADA PROTOCOLS
+===================
+Trojan WS TLS      /ws/Ghanizada
+VLESS WS TLS       /ws/VLESS-Ghanizada
+VMess WS TLS       /ws/VMess-Ghanizada
+SSH + Stunnel      Not exposed on Cloud Run (raw TCP requirement)

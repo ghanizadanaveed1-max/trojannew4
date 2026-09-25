@@ -1,0 +1,56 @@
+{
+  "log": {
+    "loglevel": "warning",
+    "access": "/tmp/xray-access.log",
+    "error": "/tmp/xray-error.log"
+  },
+  "api": {
+    "tag": "api",
+    "listen": "127.0.0.1:10085",
+    "services": ["StatsService"]
+  },
+  "stats": {},
+  "policy": {
+    "levels": {
+      "0": {
+        "statsUserUplink": true,
+        "statsUserDownlink": true,
+        "statsUserOnline": true,
+        "connIdle": 300
+      }
+    },
+    "system": {
+      "statsInboundUplink": true,
+      "statsInboundDownlink": true
+    }
+  },
+  "inbounds": [
+    {
+      "tag": "trojan-ws",
+      "listen": "127.0.0.1",
+      "port": 10000,
+      "protocol": "trojan",
+      "settings": {"clients": []},
+      "streamSettings": {"network": "ws", "security": "none", "wsSettings": {"path": "/ws/Ghanizada"}}
+    },
+    {
+      "tag": "vless-ws",
+      "listen": "127.0.0.1",
+      "port": 10001,
+      "protocol": "vless",
+      "settings": {"clients": [], "decryption": "none"},
+      "streamSettings": {"network": "ws", "security": "none", "wsSettings": {"path": "/ws/VLESS-Ghanizada"}}
+    },
+    {
+      "tag": "vmess-ws",
+      "listen": "127.0.0.1",
+      "port": 10002,
+      "protocol": "vmess",
+      "settings": {"clients": []},
+      "streamSettings": {"network": "ws", "security": "none", "wsSettings": {"path": "/ws/VMess-Ghanizada"}}
+    }
+  ],
+  "outbounds": [
+    {"protocol": "freedom", "settings": {"domainStrategy": "UseIPv4"}}
+  ]
+}

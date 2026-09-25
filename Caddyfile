@@ -1,0 +1,14 @@
+:{$PORT} {
+    encode gzip
+
+    @trojan path /ws/Ghanizada
+    reverse_proxy @trojan 127.0.0.1:10000
+
+    @vless path /ws/VLESS-Ghanizada
+    reverse_proxy @vless 127.0.0.1:10001
+
+    @vmess path /ws/VMess-Ghanizada
+    reverse_proxy @vmess 127.0.0.1:10002
+
+    reverse_proxy 127.0.0.1:8081
+}
